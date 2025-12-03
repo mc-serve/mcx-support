@@ -90,15 +90,56 @@ mcx install nginx --no-exec
 
 ### 安装 MCX
 
+**通用安装（推荐）**
+
+自动检测系统并安装：
+
 ```bash
-# Linux
-curl -fsSL https://mcx.mc.com/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mc-serve/mcx-support/main/install.sh | bash
+```
 
-# macOS
-brew install mc/tap/mcx
+**Linux**
 
-# 或从源码编译
-go install github.com/mc/mcx/cmd/mcx@latest
+```bash
+# AMD64
+curl -L https://github.com/mc-serve/mcx-support/releases/latest/download/mcx-linux-amd64.tar.gz | tar xz
+sudo mv mcx-linux-amd64 /usr/local/bin/mcx
+
+# ARM64
+curl -L https://github.com/mc-serve/mcx-support/releases/latest/download/mcx-linux-arm64.tar.gz | tar xz
+sudo mv mcx-linux-arm64 /usr/local/bin/mcx
+```
+
+**macOS**
+
+```bash
+# 一键安装（推荐）
+curl -fsSL https://raw.githubusercontent.com/mc-serve/mcx-support/main/install-macos.sh | bash
+
+# 或使用 Homebrew
+brew tap mc-serve/tap
+brew install mcx
+
+# Intel Mac 手动安装
+curl -L https://github.com/mc-serve/mcx-support/releases/latest/download/mcx-darwin-amd64.tar.gz | tar xz
+sudo mv mcx-darwin-amd64 /usr/local/bin/mcx
+
+# Apple Silicon 手动安装
+curl -L https://github.com/mc-serve/mcx-support/releases/latest/download/mcx-darwin-arm64.tar.gz | tar xz
+sudo mv mcx-darwin-arm64 /usr/local/bin/mcx
+```
+
+**Windows**
+
+下载 [mcx-windows-amd64.zip](https://github.com/mc-serve/mcx-support/releases/latest)，解压到 PATH 目录
+
+**从源码编译**
+
+```bash
+git clone https://github.com/your-org/scriptflow.git
+cd scriptflow
+go build -o mcx ./cmd/mcx
+sudo mv mcx /usr/local/bin/
 ```
 
 ### 第一次使用
@@ -196,7 +237,7 @@ MCX 配置文件位于 `~/.mcx/config.json`：
 
 ```json
 {
-  "server_url": "http://scriptbrain.mc.com",
+  "server_url": "https://scriptflow.mc-serve.com",
   "work_dir": "/home/user/.mcx"
 }
 ```
@@ -204,11 +245,14 @@ MCX 配置文件位于 `~/.mcx/config.json`：
 修改配置：
 
 ```bash
-# 使用自定义服务器
-mcx config set server http://your-server.com
+# 使用生产服务器
+mcx config set server https://scriptflow.mc-serve.com
+
+# 使用本地测试服务器
+mcx config set server http://localhost:8080
 
 # 临时使用不同服务器
-mcx install nginx --server http://test-server.com
+mcx install nginx --server https://scriptflow.mc-serve.com
 ```
 
 ## 🆚 对比其他工具
